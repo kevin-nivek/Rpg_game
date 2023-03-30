@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>RPG</title>
+		<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+	</head>
+	<body>
+
+		<div class="select-hero">
+			<h2 style="color:#FFF"> Selecione seu personagem</h2>
+			<div class="card-area">
+				
+				<div class="card-class card-guerreiro" onclick="toggleCard(this)">
+					<div class="card-figure">
+						<img src="" class="card-image" alt="Guerreiro">
+					</div>
+					<span class="card-title">Guerreiro</span> 
+				</div>	
+
+				<div class="card-class card-mago" onclick="toggleCard(this)">
+					<div class="card-figure">
+						<img src="./assets/images/entities/mago.jpg" class="card-image" alt="Mago">
+					</div>
+					<span class="card-title">Mago</span> 
+				</div>	
+			</div>
+		</div>
+
+		<div class="create-hero" style="display: none">
+
+			<div class="card-class-copy card-class ">
+				<div class="card-figure">
+				</div>
+					<span class="card-title">Mago</span> 
+				<input type="text"class="name-of-hero" name="hero-name" placeholder="Digite o nome do seu personagem">
+			</div>
+			<div class="row-btn-create">
+				<button class="create-btn" onclick="createHero()">Create</button>
+				<button class="cancel-create-btn" onclick="cancelCreate()">Cancel</button>
+			</div>
+		</div>
+				
+
+		<div class="game" style="display: none;">
+			<div class="arena">
+
+				<div id="heroi">
+					
+					<div class="lifebar">
+						<div class="bar" style="width: 10%;"></div>
+					</div>	
+
+					<div class="card-class " onclick="showInfoPlayer()">
+						<div class="card-figure">
+							<img src="" class="card-image" alt="">
+						</div>
+						<span class="card-title name">Guerreiro</span> 
+					</div>
+
+					<div>
+						<button class="attackButton">Atacar</button>
+					</div>
+
+				</div>
+
+				<div id="stage-nivel">
+						<h2 class="nivel">Nivel</h2>
+						<h2 class="info-game">Infos Game </h2>
+				</div>	
+
+				<div id="monstro">
+					
+					<div class="lifebar">
+						<div class="bar" style="width: 10%;"></div>
+					</div>	
+
+					<div class="card-class " onclick="">
+						<div class="card-figure">
+							<img src="" class="card-image" alt="">
+						</div>
+						<span class="card-title name">Guerreiro</span> 
+					</div>
+
+					<div>
+						<button class="attackButton">Atacar</button>
+					</div>
+
+				</div>
+			</div>
+
+			<ul class="log"></ul>
+		</div>
+
+		<div class="game-over" style="display: none">
+			<div class="game-over-header">
+				<h1  class="game-over-title">Game Over</h1>
+			</div>
+
+			<div class="game-over-body">
+			
+				<h2 class="game-over-message"></h2>
+			</div>
+			<div class="game-over-footer">
+				<button class="btn-reset" onclick="restartGame()">Reset</button>
+			</div>	
+		</div>
+
+		<div class="player-info" style="display:none" >
+			<div class="card-class ">
+					<div class="close-btn-show">
+						<button onclick="closeInfo()"> x</button>
+					</div>
+					<div class="card-figure">
+						<img src="" class="card-image" alt="">
+					</div>
+						<span class="card-title">Classe</span> 
+					<div class="status-player">
+						
+						<div class="status-player-field">
+							<label class="player-nome-label" >Nome:</label>
+							<div class="player-nome">Nome</div>
+						</div>
+
+						<div class="status-player-field">
+							<label class="player-level-label" >Level:</label>
+							<div class="player-level">Nome</div>
+						</div>	
+
+						<div class="status-player-field">
+							<label class="player-maxhp-label" >Max HP:</label>
+							<div class="player-maxhp">Nome</div>
+						</div>	
+
+
+						<div class="status-player-field">
+							<label class="player-hp-label" >HP:</label>
+							<div class="player-hp">Nome</div>
+						</div>	
+
+
+						<div class="status-player-field">
+							<label class="player-atq-label" >Ataque:</label>
+							<div class="player-atq">Nome</div>
+						</div>
+
+						<div class="status-player-field">
+							<label class="player-def-label" >Defesa:</label>
+							<div class="player-def">Nome</div>
+						</div>
+
+
+
+
+					</div>
+				
+				</div>	
+
+		</div>
+
+		<script type="text/javascript" src="assets/js/entities.js"></script>
+		<script type="text/javascript" src="assets/js/script.js"></script>
+	</body>
+</html>
