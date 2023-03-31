@@ -158,6 +158,51 @@ body{
 	color: gold;
 }
 
+
+.who-atk
+{}
+
+.icosaedro-atks
+{
+	width: 100%;
+	height: 120px;
+	background-image: url('../images/d20/d20.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.qtd-atks
+{
+	color: #FFF;
+	font-style: normal;
+}
+
+.damage-info
+{
+	color: red;
+	font-style: normal;
+	font-weight: 600;
+
+}
+
+.dmg-title{
+	margin: 5px;
+}
+.dmg-info{
+	margin: 5px;	
+}
+.critical{
+ color: gold;
+ font-weight: 900;
+ font-style: italic;
+}
+
+
+
 #heroi,
 #monstro{
 	flex: 3;
@@ -178,11 +223,22 @@ body{
 	transition: all 0.5s ease-out;
 }
 
+.attackButton{
+	width: 100px;
+	height: 50px;
+	border-radius: 5px;
+	margin-top: 5px;
+	background-color: slategrey;
+	color: white;
+	font-weight: bold;
+	font-size: 16px;
+}
+
 
 /*LOG*/
 
 .log {
-	width: 85vw;
+	width: 50vw;
 	border: 1px dotted #eee;
 	border-radius: 8px;
 	height: 40vh;
@@ -190,6 +246,9 @@ body{
 	background-color: #c7c7c7;
 	list-style: none;
 	text-align: left;
+	font-size: 18px;	
+line-height: 28px;
+margin: 20px auto;
 }
 
 /*GAME OVER */
@@ -272,7 +331,8 @@ body{
 .status-player{
 	display: flex;
 	flex-direction: column;
-	gap: 15px;
+	gap: 12px;
+	padding-bottom: 10px;
 }
 
 .status-player-field{

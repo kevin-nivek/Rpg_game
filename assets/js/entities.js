@@ -116,14 +116,16 @@ const stage = {
 
 				if (whoAtk %2 ==0){
 					qtsAtk = Math.floor(Math.random()*4) +1
-					document.querySelector('#stage-nivel .info-game').innerHTML= `Jogador tem ${qtsAtk} Atks`
+					document.querySelector('#stage-nivel .info-game .who-atk').innerHTML= `Jogador tem`
+						document.querySelector('#stage-nivel .info-game .qtd-atks').innerHTML= 	qtsAtk
 
 					this.jogadorEl.querySelector('.attackButton').setAttribute('data-atk',qtsAtk);
 					this.Elmonstro.querySelector('.attackButton').setAttribute('data-atk',0);
 				}
 				else{
 					qtsAtk = Math.floor(Math.random()*3) +1
-					document.querySelector('#stage-nivel .info-game').innerHTML= `Monstro tem ${qtsAtk} Atks`
+					document.querySelector('#stage-nivel .info-game .who-atk').innerHTML= `Monstro tem`
+					document.querySelector('#stage-nivel .info-game .qtd-atks').innerHTML= 	qtsAtk
 					this.jogadorEl.querySelector('.attackButton').setAttribute('data-atk',0);
 					this.Elmonstro.querySelector('.attackButton').setAttribute('data-atk',qtsAtk);
 				}
@@ -136,14 +138,17 @@ const stage = {
 	update(){
 		document.querySelector('#stage-nivel .nivel').innerHTML= `Nivel ${this.nivel + 1}`
 		let msg =''
+		let qtdsAtks = 0
 		if(parseInt(this.jogadorEl.querySelector('.attackButton').dataset.atk) >0 ){
-			msg = `Jogador tem ${this.jogadorEl.querySelector('.attackButton').dataset.atk} Atks`
+			msg = 'Jogador tem'
+			qtdsAtks = this.jogadorEl.querySelector('.attackButton').dataset.atk
 		}
 		else {
-			msg = `Monstro tem ${this.Elmonstro.querySelector('.attackButton').dataset.atk} Atks`
+			msg = 'Monstro tem'
+			qtdsAtks = this.Elmonstro.querySelector('.attackButton').dataset.atk
 		}
-		document.querySelector('#stage-nivel .info-game').innerHTML=msg
-
+		document.querySelector('#stage-nivel .info-game .who-atk').innerHTML=msg
+		document.querySelector('#stage-nivel .info-game .qtd-atks').innerHTML=qtdsAtks
 		this.jogadorEl.querySelector('.name').innerHTML = `${this.jogador.name}  LV - ${this.jogador.level} - ${this.jogador.life.toFixed(1)} HP`; 
 		let f1Pct = (this.jogador.life / this.jogador.maxLife) *100
 		let colorBar1= ' #25c925'
@@ -198,18 +203,25 @@ const stage = {
 	
 			const actualAtk = attacking.attack * atkFactor;
 			const actualDef = attacked.defense * defFactor;
-	
+			
 			if(actualAtk > actualDef){
+				 dmgEl = document.querySelector('.dmg-info');
+				 dmgEl.classList = 'dmg-info'
+				 dmgEl.innerHTML = actualAtk.toFixed(2);
 				attacked.life -= actualAtk;
 				attacked.life = attacked.life < 0 ? 0 : attacked.life;
 				log.addMessage(`${attacking.name} causou ${ actualAtk.toFixed(2)} de dano em ${attacked.name}`);
 				if(atkFactor > 1.2 && attacking.classe != 'monstro' ){
+					dmgEl.classList = 'dmg-info critical'
 					attacking.life += actualAtk* 0.2
 					attacking.life = attacking.life > attacking.maxLife ?attacking.maxLife :attacking.life 
 					log.addMessage(`critico de ${atkFactor} ${attacking.name} se curou em  ${ (actualAtk* 0.2).toFixed(2) }`);
 				}	
 			}
 			else{
+				dmgEl = document.querySelector('.dmg-info');
+				 dmgEl.classList = 'dmg-info'
+				 dmgEl.innerHTML = 'Defesa';
 				attackingElement.setAttribute('data-atk',0)
 				log.addMessage(`${attacked.name} se defendeu`);
 			}
