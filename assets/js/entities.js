@@ -29,8 +29,8 @@ const createMago = (name) => {
 		name,
 		life: 85,
 		maxLife: 85,
-		attack: 15,
-		defense: 5,
+		attack: 15,//15
+		defense: 4,//5
 		level: 1,
 		xp:0,
 		classe:'Mago'
@@ -77,9 +77,6 @@ const createThief = (level) =>{
 	}
 }
 
-
-
-
 const createBigMonster = (level) =>{
 	return {
 		...entity,
@@ -101,7 +98,7 @@ const stage = {
 	monstroEl: null,
 	nivel: 0,
 
-	start(jogador, monstros, jogadorEl, monstroEl,nivel){
+	async start(jogador, monstros, jogadorEl, monstroEl,nivel){
 		this.jogador = jogador;
 		this.nivel = nivel;
 		this.monstro = monstros;
@@ -109,33 +106,38 @@ const stage = {
 		this.Elmonstro = monstroEl;
 		
 		if(nivel ==0 ){
+			
 				this.jogadorEl.querySelector('.attackButton').addEventListener('click', ()=> this.doAttack(this.jogador, this.monstro[this.nivel]))
 				this.Elmonstro.querySelector('.attackButton').addEventListener('click', ()=> this.doAttack(this.monstro[this.nivel], this.jogador))
 
 				let whoAtk = Math.floor(Math.random()*20) +1
-
+				
 				if (whoAtk %2 ==0){
 					qtsAtk = Math.floor(Math.random()*4) +1
+					this.rollD20(qtsAtk,true,this.jogadorEl.querySelector('.attackButton'))
 					document.querySelector('#stage-nivel .info-game .who-atk').innerHTML= `Jogador tem`
-						document.querySelector('#stage-nivel .info-game .qtd-atks').innerHTML= 	qtsAtk
+						// document.querySelector('#stage-nivel .info-game .qtd-atks').innerHTML= 	qtsAtk
 
 					this.jogadorEl.querySelector('.attackButton').setAttribute('data-atk',qtsAtk);
 					this.Elmonstro.querySelector('.attackButton').setAttribute('data-atk',0);
 				}
 				else{
 					qtsAtk = Math.floor(Math.random()*3) +1
+					this.rollD20(qtsAtk,true,this.Elmonstro.querySelector('.attackButton'))
 					document.querySelector('#stage-nivel .info-game .who-atk').innerHTML= `Monstro tem`
-					document.querySelector('#stage-nivel .info-game .qtd-atks').innerHTML= 	qtsAtk
+					// document.querySelector('#stage-nivel .info-game .qtd-atks').innerHTML= 	qtsAtk
 					this.jogadorEl.querySelector('.attackButton').setAttribute('data-atk',0);
 					this.Elmonstro.querySelector('.attackButton').setAttribute('data-atk',qtsAtk);
 				}
+					this.Elmonstro.querySelector('.attackButton').setAttribute('data-canAtk',false);
+					this.jogadorEl.querySelector('.attackButton').setAttribute('data-canAtk',false);
 
 			}
 
 		this.update();
 	},
 
-	update(){
+	async update(){
 		document.querySelector('#stage-nivel .nivel').innerHTML= `Nivel ${this.nivel + 1}`
 		let msg =''
 		let qtdsAtks = 0
@@ -147,8 +149,14 @@ const stage = {
 			msg = 'Monstro tem'
 			qtdsAtks = this.Elmonstro.querySelector('.attackButton').dataset.atk
 		}
+		if(this.Elmonstro.querySelector('.attackButton').dataset.canatk == 'true' && parseInt(qtdsAtks)> 0){
+		
+			await sleep(1000 )
+			this.Elmonstro.querySelector('.attackButton').click()	
+		}
+	
 		document.querySelector('#stage-nivel .info-game .who-atk').innerHTML=msg
-		document.querySelector('#stage-nivel .info-game .qtd-atks').innerHTML=qtdsAtks
+		this.rollD20(qtdsAtks,false,null)
 		this.jogadorEl.querySelector('.name').innerHTML = `${this.jogador.name}  LV - ${this.jogador.level} - ${this.jogador.life.toFixed(1)} HP`; 
 		let f1Pct = (this.jogador.life / this.jogador.maxLife) *100
 		let colorBar1= ' #25c925'
@@ -168,6 +176,9 @@ const stage = {
 		this.Elmonstro.querySelector('.name').innerHTML = `${this.monstro[this.nivel].name}  LV -  ${this.monstro[this.nivel].level} - ${this.monstro[this.nivel].life.toFixed(1)} HP`;
 		let f2Pct = (this.monstro[this.nivel].life / this.monstro[this.nivel].maxLife) *100
 		this.Elmonstro.querySelector('.bar').style.width = `${f2Pct}%`;
+
+
+		this.updateMonsterCard()
 	},
 
 	doAttack(attacking, attacked){
@@ -177,7 +188,7 @@ const stage = {
 		if(attacking.classe != 'monstro'){
 			attackingElement = this.jogadorEl.querySelector('.attackButton');
 			attackedElement = this.Elmonstro.querySelector('.attackButton')
-			chanceAtk = Math.floor(Math.random()*2) +1
+			chanceAtk = Math.floor(Math.random()*3) +1
 		}
 		else
 		{
@@ -188,7 +199,7 @@ const stage = {
 		}
 
 
-		if (parseInt(attackingElement.dataset.atk) > 0)
+		if (parseInt(attackingElement.dataset.atk) > 0 && attackingElement.dataset.canatk)
 		{
 			attackingElement.setAttribute('data-atk',(parseInt(attackingElement.dataset.atk) -1) );
 			if (attacking.life <= 0 || attacked.life <=0  ){
@@ -256,21 +267,23 @@ const stage = {
 				
 			}
 			 if(parseInt(attackingElement.dataset.atk) == 0 ){
+
 			 	qtsAtk = Math.floor(Math.random()* chanceAtk) +1
+			 	this.rollD20(qtsAtk,true,attackedElement)
 			 	attackedElement.setAttribute('data-atk',qtsAtk);
 			 }
-		
+			if(this.nivel <= this.monstro.length )
 			this.update();
 		}
 	},
 
 	nextNivel(){
-		console.log(this.jogador)
 		if(this.nivel < this.monstro.length-1)
 		{
 			this.start(this.jogador,this.monstro,this.jogadorEl,this.Elmonstro,	this.nivel+1 )
 		}
 		else {
+			this.stopActiosGame(true)
 			log.addMessage('Fim de Jogo')
 			this.gameOver("Fim de Jogo")
 		}
@@ -279,10 +292,86 @@ const stage = {
 
 	gameOver(msg){
 		// // document.querySelector(".game").style.display = 'none';
-
+		this.stopActiosGame(true)
 		document.querySelector('.game-over-message').innerHTML=msg;
 		document.querySelector('.game-over').style.display= 'block';
 		log.newLog();
+	},
+
+	rollD20(qtsAtks, roll, entity){
+		
+		let d20El = document.querySelector('.icosaedro-atks')
+		if (roll){
+			for (let i=0; i <= 720; i++){
+				setTimeout( () => {
+					setTimeout( () => {	
+					d20El.style.transform = `rotate(${i}deg)`
+					d20El.querySelector('.qtd-atks').innerHTML = i==720 ? qtsAtks  : (Math.floor(Math.random()* 9) +1)
+					this.stopActiosGame(true)
+					if (i ==720){
+						this.stopActiosGame(false)
+						if (entity != null )
+						{
+							this.Elmonstro.querySelector('.attackButton').setAttribute('data-canAtk',false);
+							this.jogadorEl.querySelector('.attackButton').setAttribute('data-canAtk',false);
+							entity.setAttribute('data-canAtk',true);
+
+							if(this.Elmonstro.querySelector('.attackButton').dataset.canatk){
+								setTimeout (() => {
+									this.Elmonstro.querySelector('.attackButton').click()
+									
+								}, 680)
+							}
+						}
+					}
+					},// (((i*80)/(721-i))/2)-900-(((721+i-1)/i)*4*60)
+					(i >=710 ?  i+(200)*(((721-i)-10)*(-1)) : 225+(i)  )
+				)},( 10 + ( i ) )
+				)
+			}
+		}
+		else{
+			
+		  d20El.querySelector('.qtd-atks').innerHTML = qtsAtks
+		  this.stopActiosGame(false)
+		 	if (entity != null )
+			{
+				this.Elmonstro.querySelector('.attackButton').setAttribute('data-canAtk',false);
+				this.jogadorEl.querySelector('.attackButton').setAttribute('data-canAtk',false);
+				entity.setAttribute('data-canAtk',true);
+				if(this.Elmonstro.querySelector('.attackButton').dataset.canatk){
+					setTimeout (() => {
+						this.Elmonstro.querySelector('.attackButton').click()
+						
+					}, 680)
+				}
+
+
+
+			}
+		}
+	},
+
+
+	updateMonsterCard(){
+		let imgPath = `assets/images/entities/${this.monstro[this.nivel].name.toLowerCase()}.png`
+		this.Elmonstro.querySelector('.card-image').style.objectFit="fill"
+		this.Elmonstro.querySelector('.card-image').src = imgPath
+		document.querySelector('.monster-info .card-image').src = imgPath
+		document.querySelector('.monster-info .card-image').style.objectFit="fill"
+		document.querySelector('.monster-info .card-title').innerHTML = this.monstro[this.nivel].classe
+		document.querySelector('.monster-nome').innerHTML = this.monstro[this.nivel].name
+		document.querySelector('.monster-level').innerHTML = this.monstro[this.nivel].level
+		document.querySelector('.monster-hp').innerHTML = this.monstro[this.nivel].life.toFixed(2)
+		document.querySelector('.monster-maxhp').innerHTML = this.monstro[this.nivel].maxLife.toFixed(2)
+		document.querySelector('.monster-atq').innerHTML = this.monstro[this.nivel].attack.toFixed(2)
+		document.querySelector('.monster-def').innerHTML = this.monstro[this.nivel].defense.toFixed(2)
+	},
+
+	stopActiosGame(pause){
+			this.Elmonstro.querySelector('.attackButton').disabled = pause
+			this.jogadorEl.querySelector('.attackButton').disabled = pause
+		
 	}
 
 }
@@ -306,4 +395,8 @@ const log ={
 		this.list = []
 		this.render();
 	}
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

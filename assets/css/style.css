@@ -124,7 +124,8 @@ body{
 		background-color: #ff1f28;
 	}
 
-/*ARENA */
+
+/* ARENA */
 
 .game{
 	width: calc(100vw - 40px) ;
@@ -192,15 +193,16 @@ body{
 .dmg-title{
 	margin: 5px;
 }
+
 .dmg-info{
 	margin: 5px;	
 }
+
 .critical{
  color: gold;
  font-weight: 900;
  font-style: italic;
 }
-
 
 
 #heroi,
@@ -266,6 +268,7 @@ margin: 20px auto;
 	border-radius: 40px;
 	border: 5px solid gold;
 }
+
 .game-over-header{
 	width: 100%;
 	height: 25%;
@@ -288,6 +291,7 @@ margin: 20px auto;
 	align-items: center;
 	justify-content: center;
 }
+
 
 .game-over-message{
 	text-align: center;
@@ -320,7 +324,7 @@ margin: 20px auto;
 	width: 320px;
 	height: 500px;
 	top: calc(50% - 250px);
-	left: calc(50% - 250px );
+	left: calc(50% - 325px );
 
 }
 .player-info .card-class{
@@ -336,6 +340,53 @@ margin: 20px auto;
 }
 
 .status-player-field{
+	display: flex;
+	width: 150px;
+	justify-content: space-between;
+}
+
+.close-btn-show{
+	width: 100%;
+}
+
+.close-btn-show button{
+	margin-right: 3px;
+	float: right;
+	color: #FFF;
+	font-style: normal;
+	background-color: red;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+/* MONSTER INFO */
+
+.monster-info{
+	position: absolute;
+	width: 320px;
+	height: 500px;
+	top: calc(50% - 250px);
+	right: calc(50% - 325px );
+
+}
+.monster-info .card-class{
+	width: 100%;
+	height: 100%;
+}
+
+.status-monster{
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding-bottom: 10px;
+}
+
+.status-monster-field{
 	display: flex;
 	width: 150px;
 	justify-content: space-between;

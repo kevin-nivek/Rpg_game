@@ -3,9 +3,9 @@
 let player;
 let game = [];
 let enemies= [];
+
 function toggleCard(elem){
 	let elemento = elem
-	console.log(elemento)
 
 	let lastClass = elemento.classList[1]
 	let cardSaver = document.querySelector('.card-class-copy')
@@ -28,7 +28,6 @@ function createHero(){
 	let nome = cardSaver.querySelector('input').value
 	let heroClass = cardSaver.querySelector('.card-title').innerHTML
 
-	console.log(nome+"   -> "+heroClass)
 
 	if(nome != ''){
 		if (heroClass=='Guerreiro'){
@@ -37,7 +36,6 @@ function createHero(){
 		else{
 			player = createMago(nome);
 		}
-		console.log(player)
 		document.querySelector('.create-hero').style.display='none'
 		document.querySelector('.game').style.display='block'
 		startGame()
@@ -49,8 +47,7 @@ function createHero(){
 
 function genereteEnemy(){
 	classEnemy= 	Math.floor(Math.random() *4)
-	levelenemy = Math.floor(Math.random() *3)
-	console.log("class => "+classEnemy) 
+	levelenemy = Math.floor(Math.random() *4)
 	switch (classEnemy)
 	{
 	case 0:
@@ -66,10 +63,6 @@ function genereteEnemy(){
 		 enemy = createSlime(levelenemy)
 		return enemy
 	}
-
-
-
-
 }
 
 function startGame(){
@@ -108,7 +101,7 @@ function copydataHero(){
 	battlecard.querySelector('.card-class').classList = originalcard.querySelector(`.card-class.card-${player.classe.toLowerCase()}`).classList
 	battlecard.querySelector('.card-figure').innerHTML = originalcard.querySelector(`.card-${player.classe.toLowerCase()} .card-figure`).innerHTML
 	infoPlayer.querySelector('.card-figure').innerHTML = originalcard.querySelector(`.card-${player.classe.toLowerCase()} .card-figure`).innerHTML
-
+	battlecard.querySelector('.card-image').style.objectFit='fill'
 }
 
 function restartGame(){
@@ -129,7 +122,17 @@ function showInfoPlayer(){
 
 }
 
+function showInfoMonster(){
+	document.querySelector('.monster-info').style.display = 'block'
+
+}
+
 function closeInfo(){
 	document.querySelector('.player-info').style.display = 'none'
+
+}
+
+function closeInfoMonster(){
+	document.querySelector('.monster-info').style.display = 'none'
 
 }

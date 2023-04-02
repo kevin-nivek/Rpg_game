@@ -15,7 +15,7 @@
 				
 				<div class="card-class card-guerreiro" onclick="toggleCard(this)">
 					<div class="card-figure">
-						<img src="" class="card-image" alt="Guerreiro">
+						<img src="./assets/images/entities/guerreiro.jpg" class="card-image" alt="Guerreiro">
 					</div>
 					<span class="card-title">Guerreiro</span> 
 				</div>	
@@ -87,14 +87,14 @@
 						<div class="bar" style="width: 10%;"></div>
 					</div>	
 
-					<div class="card-class " onclick="">
+					<div class="card-class " onclick="showInfoMonster()">
 						<div class="card-figure">
 							<img src="" class="card-image" alt="">
 						</div>
 						<span class="card-title name">Guerreiro</span> 
 					</div>
 
-					<div>
+					<div style="display: none;">
 						<button class="attackButton">Atacar</button>
 					</div>
 
@@ -169,6 +169,60 @@
 				</div>	
 
 		</div>
+
+		<div class="monster-info" style="display:none" >
+			<div class="card-class ">
+					<div class="close-btn-show">
+						<button onclick="closeInfoMonster()"> x</button>
+					</div>
+					<div class="card-figure">
+						<img src="" class="card-image" alt="">
+					</div>
+						<span class="card-title">Classe</span> 
+					<div class="status-monster">
+						
+						<div class="status-monster-field">
+							<label class="monster-nome-label" >Nome:</label>
+							<div class="monster-nome">Nome</div>
+						</div>
+
+						<div class="status-monster-field">
+							<label class="monster-level-label" >Level:</label>
+							<div class="monster-level">Nome</div>
+						</div>	
+
+						<div class="status-monster-field">
+							<label class="monster-maxhp-label" >Max HP:</label>
+							<div class="monster-maxhp">Nome</div>
+						</div>	
+
+
+						<div class="status-monster-field">
+							<label class="monster-hp-label" >HP:</label>
+							<div class="monster-hp">Nome</div>
+						</div>	
+
+
+						<div class="status-monster-field">
+							<label class="monster-atq-label" >Ataque:</label>
+							<div class="monster-atq">Nome</div>
+						</div>
+
+						<div class="status-monster-field">
+							<label class="monster-def-label" >Defesa:</label>
+							<div class="monster-def">Nome</div>
+						</div>
+
+
+
+
+					</div>
+				
+				</div>	
+
+		</div>
+
+
 
 		<script type="text/javascript" src="assets/js/entities.js"></script>
 		<script type="text/javascript" src="assets/js/script.js"></script>
