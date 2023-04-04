@@ -98,18 +98,20 @@ const stage = {
 	monstroEl: null,
 	nivel: 0,
 
-	async start(jogador, monstros, jogadorEl, monstroEl,nivel){
+	 start(jogador, monstros, jogadorEl, monstroEl,nivel,game){
+
 		this.jogador = jogador;
 		this.nivel = nivel;
 		this.monstro = monstros;
 		this.jogadorEl = jogadorEl;
 		this.Elmonstro = monstroEl;
-		
-		if(nivel ==0 ){
-			
-				this.jogadorEl.querySelector('.attackButton').addEventListener('click', ()=> this.doAttack(this.jogador, this.monstro[this.nivel]))
-				this.Elmonstro.querySelector('.attackButton').addEventListener('click', ()=> this.doAttack(this.monstro[this.nivel], this.jogador))
+		this.game = game
 
+		if(nivel ==0 ){
+				if(game == 0){
+					this.jogadorEl.querySelector('.attackButton').addEventListener('click', ()=> this.doAttack(this.jogador, this.monstro[this.nivel]))
+					this.Elmonstro.querySelector('.attackButton').addEventListener('click', ()=> this.doAttack(this.monstro[this.nivel], this.jogador))
+				}
 				let whoAtk = Math.floor(Math.random()*20) +1
 				
 				if (whoAtk %2 ==0){

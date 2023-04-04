@@ -1,9 +1,8 @@
 
 
 let player;
-let game = [];
+let game =0;
 let enemies= [];
-
 function toggleCard(elem){
 	let elemento = elem
 
@@ -89,8 +88,10 @@ stage.start(
 	enemies,
 	document.querySelector('#heroi'),
 	document.querySelector('#monstro'),
-	0
+	0,
+	game
 	);
+game+=1;
 }
 
 function copydataHero(){
